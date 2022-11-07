@@ -26,6 +26,7 @@ export async function getStaticPaths() {
     paths: results.map((character) => {
       return { params: { id: String(character.id) } }
     }),
+    fallback: false,
   }
 }
 
@@ -33,7 +34,7 @@ export async function getStaticProps({ params }: { params: { id: String } }) {
   const res = await fetch(
     `https://rickandmortyapi.com/api/character/${params.id}`
   )
-  const character = res.json()
+  const character = await res.json()
   return {
     props: {
       character,
